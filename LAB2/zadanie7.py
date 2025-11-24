@@ -1,12 +1,32 @@
-from sympy import symbols, sympify, solve
+import cmath
 
-x = symbols('x')
+def solveQuadratic(a: float, b: float, c: float):
+  if a == 0: # Sprawdzamy czy jest kwadratowe
+    if b == 0: # Sprawdzamy czy jest liniowe
+      return None
+    return [-c / b]
+  
+  Delta = b * b - 4 * a * c 
 
-expression_string = input('Podaj równanie kwadratowe w formacie (a * x ** 2 + b * x + c): \n')
-try:  
-  expression = sympify(expression_string) ## Zamieniamy na format który przetrafi SymPy
-  solutions = solve(expression, x) ## Pozwalamy mu rozwiązać równanie
-  print('Pierwiastki równania kwadratowego: ', solutions)
-except:
-  print("Podano niepoprawne równanie (pamiętaj o odpowiednim zapisie), lub wystąpił inny błąd")
+  sqrtDelta = cmath.sqrt(Delta) # Używam cmath dal pierwiastków zespolonych
+  return ((-b - sqrtDelta) / (2 * a), (-b + sqrtDelta) / (2 * a))
 
+# proste pobieranie wejścia:
+def prompt_float(prompt):
+    while True:
+        try:
+            return float(input(prompt))
+        except ValueError:
+            print("Podaj liczbę (np. 1, -2.5):")
+
+# Wczytywanie zmiennych
+a = prompt_float("Podaj a: ")
+b = prompt_float("Podaj b: ")
+c = prompt_float("Podaj c: ")
+
+sols = solveQuadratic(a, b, c) # Rozwiązania
+if sols is None:
+    print("Brak rozwiązań lub nieskończenie wiele rozwiązań.")
+else:
+    print("Rozwiązania:", sols)
+    

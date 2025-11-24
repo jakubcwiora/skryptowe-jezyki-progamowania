@@ -1,3 +1,3 @@
 import subprocess as sbp
 
-sbp.run(["python", "--version"])
+sbp.run(["python", "--version"]) # Uruchamiamy polecenie w terminalu

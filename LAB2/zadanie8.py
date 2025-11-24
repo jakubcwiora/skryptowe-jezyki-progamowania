@@ -1,4 +1,4 @@
-from datetime import date, timedelta
+from datetime import date
 
 born = date(2006, 8, 5)
 today = date.today()

@@ -23,8 +23,7 @@ def test_set_operations() -> None:
     popped_order.append(popped)
     print("pop() ->", popped, "| pozostało:", temp)
   print("Kolejność usuwania przez pop w tej sesji:", popped_order)
-  print("Uwaga: kolejność może wyglądać deterministycznie w jednej sesji," +
-      "ale nie jest gwarantowana przez specyfikację Pythona i może się zmieniać między uruchomieniami/interpreterami.")
+  print("Kolejność zmienia się w każdej sesji")
   # pop() na pustym zbiorze podniesie KeyError
   try:
     set().pop()

@@ -1,6 +1,5 @@
 import calendar
 
-
 def printCalendar():
   year = int(input("Podaj rok: "))
   month = int(input("Podaj miesiąc: "))

@@ -1,8 +1,8 @@
-# Global variable
-a = 10
+# Globalna zmienna
+a: int = 10
 
-# Global constant 
-A = 100
+# Globalna stała 
+A: int = 100
 
 def printFromFunction():
     
