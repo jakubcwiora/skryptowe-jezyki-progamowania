@@ -17,7 +17,7 @@ class Student:
   def give_mark(self, mark: int) -> None:
     self.marks.append(mark)
 
-  def give_index(self) -> int:
+  def give_index(self) -> None:
     self.index = self._next_index
     Student._next_index += 1
 
