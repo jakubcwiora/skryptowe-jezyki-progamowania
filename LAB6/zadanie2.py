@@ -10,8 +10,6 @@ def raise_value() -> NoReturn:
 
 
 def main() -> None:
-  print("Zadanie 2 demonstration:")
-
   try:
     raise_generic()
   except ValueError as ex:

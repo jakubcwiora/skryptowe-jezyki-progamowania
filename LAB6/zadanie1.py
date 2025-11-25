@@ -21,7 +21,6 @@ def case_valid_float() -> None:
 
 
 def main() -> None:
-  print("Zadanie 1 demonstration:")
   for func in (case_division_by_zero, case_float_with_comma, case_valid_float):  # type: ignore[arg-type]
     func()
 

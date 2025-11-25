@@ -1,35 +1,24 @@
-from pathlib import Path
-from typing import Optional
+import os
 
 
-def print_tree(
-  path: Path, prefix: str = "", max_depth: Optional[int] = 3, _depth: int = 0
-) -> None:
-  """
-  Print a simple tree of files and directories starting at `path`.
-  `max_depth` limits recursion depth; None means unlimited.
-  """
-  if max_depth is not None and _depth > max_depth:
-    return
+def print_directory_tree(directory: str, indent: str = "") -> None:
   try:
-    entries = sorted(path.iterdir(), key=lambda p: (p.is_file(), p.name.lower()))
-  except Exception as ex:
-    print(prefix + f"[error reading {path}: {ex}]")
-    return
-
-  for i, entry in enumerate(entries):
-    is_last = i == len(entries) - 1
-    connector = "└── " if is_last else "├── "
-    print(prefix + connector + entry.name)
-    if entry.is_dir():
-      extension = "    " if is_last else "│   "
-      print_tree(entry, prefix + extension, max_depth, _depth + 1)
+    entries = os.listdir(directory)
+    for entry in entries:
+      path = os.path.join(directory, entry)
+      if os.path.isdir(path):
+        print(f"{indent}Dir: {entry}")
+        print_directory_tree(path, indent + "  ")
+      else:
+        print(f"{indent}File: {entry}")
+  except PermissionError as e:
+    print(f"Permission denied: {e}")
+  except FileNotFoundError as e:
+    print(f"Directory not found: {e}")
 
 
 def main() -> None:
-  print("Zadanie 6 demonstration: tree of current directory (depth 2)")
-  print(".")
-  print_tree(Path("."), max_depth=2)
+  print_directory_tree(".")
 
 
 if __name__ == "__main__":

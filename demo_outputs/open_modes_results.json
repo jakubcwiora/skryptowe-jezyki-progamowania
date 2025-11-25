@@ -1,0 +1,18 @@
+{
+  "r": {
+    "existing": "error: UnsupportedOperation: not writable",
+    "nonexist": "error: FileNotFoundError: [Errno 2] No such file or directory: 'demo_outputs\\\\open_modes\\\\nonexist_r.txt'"
+  },
+  "w": {
+    "existing": "write succeeded",
+    "nonexist": "write succeeded (created or opened)"
+  },
+  "a": {
+    "existing": "write succeeded",
+    "nonexist": "write succeeded (created or opened)"
+  },
+  "x": {
+    "existing": "error: FileExistsError: [Errno 17] File exists: 'demo_outputs\\\\open_modes\\\\existing.txt'",
+    "nonexist": "write succeeded (created or opened)"
+  }
+}

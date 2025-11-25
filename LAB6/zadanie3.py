@@ -16,7 +16,6 @@ def compute_division(divisor: int) -> Optional[float]:
 
 
 def main() -> None:
-  print("Zadanie 3 demonstration:")
   print("- call with divisor=2")
   compute_division(2)
   print("- call with divisor=0")

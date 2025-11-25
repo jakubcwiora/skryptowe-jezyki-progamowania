@@ -36,7 +36,7 @@ def test_open_modes() -> Dict[str, Dict[str, str]]:
 
   out = DEMO_DIR / "open_modes_results.json"
   out.write_text(json.dumps(results, indent=2), encoding="utf-8")
-  print("Zadanie 5 results written to", out)
+  print("Results written to", out)
   return results
 
 

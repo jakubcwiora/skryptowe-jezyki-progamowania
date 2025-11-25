@@ -1,23 +1,22 @@
 import random
-from pathlib import Path
-from typing import List
 
 
-def generate_random_numbers(n: int, a: int, b: int, filename: Path) -> List[int]:
-  if n <= 0:
-    raise ValueError("n must be positive")
-  if a > b:
-    raise ValueError("a must be <= b")
-  numbers = [random.randint(a, b) for _ in range(n)]
-  filename.parent.mkdir(parents=True, exist_ok=True)
-  filename.write_text("\n".join(str(x) for x in numbers) + "\n", encoding="utf-8")
-  print(f"Wrote {n} numbers to {filename}")
-  return numbers
+def generate_and_save_numbers(n: int, a: float, b: float, filename: str):
+  """Task 8: Generate and save numbers."""
+  try:
+    numbers = [random.uniform(a, b) for _ in range(n)]
+    with open(filename, "w") as f:
+      for num in numbers:
+        f.write(f"{num}\n")
+    print(f"Saved {n} numbers to {filename}")
+  except ValueError as e:
+    print(f"Invalid range: {e}")
+  except Exception as e:
+    print(f"Error: {e}")
 
 
-def main() -> None:
-  out = Path("demo_outputs/zadanie8/numbers.txt")
-  generate_random_numbers(10, 1, 100, out)
+def main():
+  generate_and_save_numbers(5, 1.0, 10.0, "numbers.txt")
 
 
 if __name__ == "__main__":

@@ -1,45 +1,41 @@
-import json
-from dataclasses import dataclass, asdict
-from pathlib import Path
-from typing import List
+class Employee:
+  """Task 9: Employee class with save/load."""
 
+  def __init__(self, name: str, age: int, salary: float):
+    self.name = name
+    self.age = age
+    self.salary = salary
 
-@dataclass
-class DemoObject:
-  items: List[int]
-  value: int
-  name: str
-
-  def to_json_file(self, path: Path) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
+  def save_to_file(self, filename: str):
     try:
-      with path.open("w", encoding="utf-8") as fh:
-        json.dump(asdict(self), fh, indent=2)
-      print(f"Saved object to {path}")
-    except OSError as ex:
-      print("Error saving object:", ex)
-      raise
+      with open(filename, "w") as f:
+        f.write(f"{self.name}\n{self.age}\n{self.salary}\n")
+      print(f"Saved to {filename}")
+    except Exception as e:
+      print(f"Save error: {e}")
 
   @classmethod
-  def from_json_file(cls, path: Path) -> "DemoObject":
+  def load_from_file(cls, filename: str):
     try:
-      with path.open("r", encoding="utf-8") as fh:
-        data = json.load(fh)
-      return cls(items=data["items"], value=int(data["value"]), name=str(data["name"]))
-    except FileNotFoundError:
-      print("File not found when trying to load object:", path)
+      with open(filename, "r") as f:
+        lines = f.readlines()
+        name = lines[0].strip()
+        age = int(lines[1].strip())
+        salary = float(lines[2].strip())
+      return cls(name, age, salary)
+    except FileNotFoundError as e:
+      print(f"File not found: {e}")
       raise
-    except (json.JSONDecodeError, KeyError, TypeError) as ex:
-      print("Error decoding or parsing JSON:", ex)
+    except (ValueError, IndexError) as e:
+      print(f"Invalid data: {e}")
       raise
 
 
-def main() -> None:
-  p = Path("demo_outputs/zadanie9/demo_object.json")
-  obj = DemoObject(items=[1, 2, 3], value=42, name="Alice")
-  obj.to_json_file(p)
-  loaded = DemoObject.from_json_file(p)
-  print("Loaded object:", loaded)
+def main():
+  emp = Employee("John", 30, 50000.0)
+  emp.save_to_file("employee.txt")
+  loaded_emp = Employee.load_from_file("employee.txt")
+  print(f"Loaded: {loaded_emp.name}, {loaded_emp.age}, {loaded_emp.salary}")
 
 
 if __name__ == "__main__":

@@ -2,10 +2,6 @@ from pathlib import Path
 
 
 def safe_open_read(path: Path) -> str:
-  """
-  Open a file for reading and return its content.
-  Raises FileNotFoundError with an explanatory message if file is missing.
-  """
   try:
     with path.open("r", encoding="utf-8") as fh:
       return fh.read()
@@ -14,14 +10,12 @@ def safe_open_read(path: Path) -> str:
 
 
 def demonstrate_errors() -> None:
-  print("Zadanie 4 demonstration:")
   missing = Path("this_file_does_not_exist.txt")
   try:
     _ = safe_open_read(missing)
   except FileNotFoundError as ex:
     print(" - Opening non-existent file raised:", type(ex).__name__, "-", ex)
 
-  # Create a file and open in "r", then attempt to write
   p = Path("zadanie4_demo.txt")
   p.write_text("hello\n", encoding="utf-8")
   try:

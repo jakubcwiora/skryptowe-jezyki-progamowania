@@ -1,50 +1,36 @@
+# Testing shutil.copy
+import os
 import shutil
-from pathlib import Path
-from typing import Tuple
 
 
-def test_copy(base: Path) -> Tuple[Path, Path, Path]:
-  src_dir = base / "src"
-  dst_dir = base / "dst"
-  src_dir.mkdir(parents=True, exist_ok=True)
-  if dst_dir.exists():
-    shutil.rmtree(dst_dir)
+src = "source.txt"
+dst_dir = "dest/"
+dst_file = os.path.join(dst_dir, "source.txt")
 
-  src_file = src_dir / "example.txt"
-  src_file.write_text("original\n", encoding="utf-8")
+# Ensure dest dir exists
+os.makedirs(dst_dir, exist_ok=True)
 
-  # 1) destination directory exists and file does not exist
-  dst_dir.mkdir(parents=True, exist_ok=True)
-  dst_file = dst_dir / "example.txt"
-  if dst_file.exists():
-    dst_file.unlink()
-  shutil.copy(str(src_file), str(dst_file))
-  print(" - copy when target does not exist: success")
+# Create source file
+with open(src, "w") as f:
+  f.write("Test content")
 
-  # 2) target exists -> will be overwritten
-  dst_file.write_text("old content\n", encoding="utf-8")
-  shutil.copy(str(src_file), str(dst_file))
-  print(" - copy when target exists: overwritten")
+# 1. File does not exist in dest
+try:
+  shutil.copy(src, dst_file)
+  print("Copy 1: success")
+except Exception as e:
+  print(f"Copy 1 error: {e}")
 
-  # 3) target directory does not exist
-  shutil.rmtree(dst_dir)
-  try:
-    shutil.copy(str(src_file), str(dst_file))
-    print(" - copy when target directory missing: unexpectedly succeeded")
-  except FileNotFoundError as ex:
-    print(
-      " - copy when target directory missing: raised FileNotFoundError as expected:", ex
-    )
+# 2. File exists in dest
+try:
+  shutil.copy(src, dst_file)
+  print("Copy 2: success")
+except Exception as e:
+  print(f"Copy 2 error: {e}")
 
-  return src_file, dst_file, dst_dir
-
-
-def main() -> None:
-  print("Zadanie 7 demonstration:")
-  base = Path("demo_outputs/zadanie7")
-  base.mkdir(parents=True, exist_ok=True)
-  test_copy(base)
-
-
-if __name__ == "__main__":
-  main()
+# 3. Dest dir does not exist
+try:
+  shutil.copy(src, "nonexistent/source.txt")
+  print("Copy 3: success")
+except Exception as e:
+  print(f"Copy 3 error: {e}")
